@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Trevor Shoaf</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Courier+Prime:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:      #fdf8f0;
+    --cream-2:    #f5ede0;
+    --warm-white: #fffcf7;
+    --ink:        #221a10;
+    --ink-soft:   #4a3728;
+    --gold:       #b8892a;
+    --gold-2:     #d4a845;
+    --gold-pale:  rgba(184,137,42,0.10);
+    --muted:      #9a8070;
+    --border:     rgba(184,137,42,0.16);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    color: var(--ink);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* =====================
+     HERO
+  ===================== */
+  .hero {
+    background: var(--warm-white);
+    padding: 80px 32px 68px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 420px;
+    background: radial-gradient(ellipse, rgba(212,168,69,0.09) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 12%; right: 12%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.6;
+  }
+
+  .photo-wrap {
+    position: relative;
+    margin-bottom: 30px;
+    animation: rise 0.9s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  .photo-ring {
+    width: 136px; height: 136px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-2));
+    box-shadow: 0 6px 28px rgba(184,137,42,0.2), 0 2px 6px rgba(0,0,0,0.07);
+  }
+
+  .photo-ring img {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    background: var(--cream-2);
+  }
+
+  .name {
+    font-size: clamp(38px, 7vw, 58px);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    line-height: 1.05;
+    color: var(--ink);
+    animation: rise 0.9s 0.1s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  .name em { font-style: italic; color: var(--gold); }
+
+  .rule {
+    width: 44px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 18px auto;
+    animation: rise 0.9s 0.16s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  .hero-titles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    animation: rise 0.9s 0.2s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  .title-main {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .title-sub {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: rise 0.9s 0.25s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  .meta-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 13px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--gold-pale);
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .meta-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .scroll-hint {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: rise 0.9s 0.45s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  .scroll-hint span {
+    font-family: 'Courier Prime', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(154,128,112,0.45);
+  }
+
+  .scroll-line {
+    width: 1px; height: 30px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2.2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%,100% { opacity: 0.3; }
+    50%      { opacity: 0.9; }
+  }
+
+  /* =====================
+     SHARED SECTION
+  ===================== */
+  .section {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 68px 32px;
+  }
+
+  .section + .section {
+    border-top: 1px solid rgba(184,137,42,0.12);
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 34px;
+  }
+
+  .eyebrow-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .eyebrow-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, rgba(184,137,42,0.3), transparent);
+  }
+
+  /* =====================
+     ABOUT
+  ===================== */
+  .about-lead {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.82;
+    color: var(--ink-soft);
+    margin-bottom: 36px;
+  }
+
+  .about-lead em    { font-style: italic; color: var(--ink); }
+  .about-lead strong { font-weight: 600; color: var(--ink); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 36px;
+  }
+
+  .about-card {
+    padding: 20px 22px;
+    background: var(--warm-white);
+    border: 1px solid rgba(184,137,42,0.13);
+    border-radius: 2px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .about-card:hover {
+    border-color: rgba(184,137,42,0.3);
+    box-shadow: 0 4px 18px rgba(184,137,42,0.07);
+  }
+
+  .card-head {
+    font-family: 'Courier Prime', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-head::before {
+    content: '';
+    width: 12px; height: 1px;
+    background: var(--gold);
+    opacity: 0.45;
+  }
+
+  .card-body {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--ink-soft);
+    line-height: 1.75;
+  }
+
+  .card-body ul { list-style: none; }
+
+  .card-body ul li {
+    padding: 2px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .card-body ul li::before {
+    content: '·';
+    color: var(--gold);
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 9px;
+    letter-spacing: 0.07em;
+    padding: 4px 10px;
+    border: 1px solid rgba(184,137,42,0.22);
+    border-radius: 20px;
+    color: var(--muted);
+    background: rgba(184,137,42,0.05);
+  }
+
+  /* =====================
+     CONTEXT STRIP (replaces "fun" strip)
+  ===================== */
+  .context-strip {
+    background: var(--ink);
+    padding: 56px 32px;
+  }
+
+  .context-inner {
+    max-width: 660px;
+    margin: 0 auto;
+  }
+
+  .ctx-eyebrow {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 32px;
+  }
+
+  .ctx-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--gold-2);
+    white-space: nowrap;
+  }
+
+  .ctx-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, rgba(212,168,69,0.28), transparent);
+  }
+
+  .ctx-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .ctx-item {
+    padding: 22px 20px;
+    border: 1px solid rgba(212,168,69,0.11);
+    background: rgba(255,255,255,0.025);
+    border-radius: 2px;
+    transition: border-color 0.3s;
+  }
+
+  .ctx-item:hover { border-color: rgba(212,168,69,0.28); }
+
+  .ctx-num {
+    font-family: 'Courier Prime', monospace;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--gold-2);
+    display: block;
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+  }
+
+  .ctx-item-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(212,168,69,0.6);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .ctx-text {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(253,248,240,0.5);
+    line-height: 1.65;
+  }
+
+  /* =====================
+     LINKS
+  ===================== */
+  .links { display: flex; flex-direction: column; gap: 10px; }
+
+  .link-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 19px 22px;
+    border: 1px solid rgba(184,137,42,0.15);
+    text-decoration: none;
+    color: var(--ink);
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+    background: var(--warm-white);
+    overflow: hidden;
+    border-radius: 2px;
+  }
+
+  .link-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--gold);
+    transform: scaleY(0);
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    transform-origin: bottom;
+  }
+
+  .link-item:hover {
+    border-color: rgba(184,137,42,0.34);
+    box-shadow: 0 4px 20px rgba(184,137,42,0.08);
+    transform: translateX(4px);
+  }
+
+  .link-item:hover::before { transform: scaleY(1); }
+
+  .link-icon {
+    width: 40px; height: 40px;
+    border-radius: 5px;
+    background: var(--gold-pale);
+    border: 1px solid rgba(184,137,42,0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600;
+    flex-shrink: 0;
+    color: var(--gold);
+    font-family: 'Courier Prime', monospace;
+    transition: background 0.3s;
+  }
+
+  .link-item:hover .link-icon { background: rgba(184,137,42,0.16); }
+
+  .link-label { flex: 1; }
+
+  .link-main {
+    font-size: 15px; font-weight: 400;
+    letter-spacing: 0.03em;
+    display: block; color: var(--ink);
+  }
+
+  .link-sub {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px; letter-spacing: 0.11em;
+    color: var(--muted); text-transform: uppercase;
+    display: block; margin-top: 3px;
+  }
+
+  .link-arrow {
+    color: var(--muted); font-size: 15px;
+    transition: color 0.3s, transform 0.3s;
+  }
+
+  .link-item:hover .link-arrow { color: var(--gold); transform: translateX(4px); }
+
+  /* =====================
+     FOOTER
+  ===================== */
+  .footer {
+    text-align: center;
+    padding: 44px 24px 56px;
+    border-top: 1px solid rgba(184,137,42,0.1);
+    background: var(--warm-white);
+  }
+
+  .footer-name {
+    font-size: 14px; font-style: italic;
+    color: var(--muted);
+  }
+
+  .footer-rule {
+    width: 26px; height: 1px;
+    background: rgba(184,137,42,0.28);
+    margin: 12px auto;
+  }
+
+  .footer-text {
+    font-family: 'Courier Prime', monospace;
+    font-size: 9px; letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(154,128,112,0.4);
+  }
+
+  .footer-email {
+    margin-top: 11px;
+  }
+
+  .footer-email a {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px; letter-spacing: 0.07em;
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-email a:hover { color: var(--ink); }
+
+  /* =====================
+     ANIMATIONS
+  ===================== */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+                transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* =====================
+     RESPONSIVE
+  ===================== */
+  @media (max-width: 560px) {
+    .about-grid  { grid-template-columns: 1fr; }
+    .ctx-grid    { grid-template-columns: 1fr; }
+    .section     { padding: 52px 20px; }
+    .context-strip { padding: 52px 20px; }
+    .hero        { padding: 64px 20px 56px; }
+    .about-lead  { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="photo-wrap">
+    <div class="photo-ring">
+      <img
+        src="https://engineering.purdue.edu/ResourceDB/ResourceFiles/image296437"
+        alt="Trevor Shoaf"
+        onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#d4a845,#b8892a);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:300;color:#fff;letter-spacing:2px;\'>TS</div>'"
+      />
+    </div>
+  </div>
+
+  <h1 class="name">Trevor <em>Shoaf</em></h1>
+  <div class="rule"></div>
+  <div class="hero-titles">
+    <span class="title-main">PhD Student · Biomedical Engineering</span>
+    <span class="title-sub">Purdue University · West Lafayette, IN</span>
+  </div>
+
+  <div class="hero-meta">
+    <span class="meta-pill"><span class="meta-dot"></span>Computational Biology</span>
+    <span class="meta-pill"><span class="meta-dot"></span>Infectious Disease</span>
+    <span class="meta-pill"><span class="meta-dot"></span>Agent-Based Modeling</span>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ========== ABOUT ========== -->
+<section class="section reveal" id="about">
+  <div class="eyebrow">
+    <span class="eyebrow-label">About</span>
+    <div class="eyebrow-line"></div>
+  </div>
+
+  <p class="about-lead">
+    I am a PhD student in Biomedical Engineering at Purdue University in the lab of Dr. Elsje Pienaar. My research applies <em>computational and mathematical modeling</em> to infectious disease, with a focus on understanding sub-cellular Ebola virus dynamics and evaluating antibiotic efficacy against non-tuberculosis Mycobacterium infections. I use <strong>agent-based models</strong> and pharmacokinetic/pharmacodynamic frameworks to study how pathogens behave and how treatments can be optimized. Alongside research, I am committed to mentoring undergraduate students and contributing to diversity and inclusion in STEM.
+  </p>
+
+  <div class="about-grid">
+    <div class="about-card">
+      <div class="card-head">Current Research</div>
+      <div class="card-body">
+        <ul>
+          <li>Ebola virus sub-cellular protein dynamics</li>
+          <li>NTM antibiotic efficacy (PK/PD modeling)</li>
+          <li>Probability of target attainment analysis</li>
+          <li>Mentoring undergraduate researchers</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="about-card">
+      <div class="card-head">Education</div>
+      <div class="card-body">
+        <ul>
+          <li>Ph.D. BME — Purdue (exp. 2026)</li>
+          <li>M.S.E. Biological Eng. — Purdue, 2022</li>
+          <li>B.S. Biological Eng. — Purdue, 2018</li>
+          <li>Exchange semester — CPE Lyon, France, 2017</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="about-card">
+      <div class="card-head">Skills</div>
+      <div class="card-body">
+        <ul>
+          <li>Java, Python, MATLAB, C, SAS</li>
+          <li>English (native) · French (professional)</li>
+          <li>U.S. &amp; Estonian (E.U.) citizen</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="about-card">
+      <div class="card-head">Research Interests</div>
+      <div class="card-body tag-row">
+        <span class="tag">Systems Biology</span>
+        <span class="tag">Agent-Based Models</span>
+        <span class="tag">Neural Networks</span>
+        <span class="tag">Immunological Models</span>
+        <span class="tag">Cardiovascular Models</span>
+        <span class="tag">Diversity in STEM</span>
+        <span class="tag">Data Biasing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CONTEXT STRIP ========== -->
+<div class="context-strip reveal">
+  <div class="context-inner">
+    <div class="ctx-eyebrow">
+      <span class="ctx-label">By the numbers</span>
+      <div class="ctx-line"></div>
+    </div>
+    <div class="ctx-grid">
+      <div class="ctx-item">
+        <span class="ctx-num">10+</span>
+        <span class="ctx-item-label">Years at Purdue</span>
+        <p class="ctx-text">B.S., M.S.E., and PhD — all in biological and biomedical engineering.</p>
+      </div>
+      <div class="ctx-item">
+        <span class="ctx-num">4</span>
+        <span class="ctx-item-label">Undergrads Mentored</span>
+        <p class="ctx-text">Actively mentoring students on the NTM modeling project through the Pienaar Lab.</p>
+      </div>
+      <div class="ctx-item">
+        <span class="ctx-num">4</span>
+        <span class="ctx-item-label">Professional Societies</span>
+        <p class="ctx-text">Active member of BMES, SMB, AIChE, and formerly ASABE since 2016.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== LINKS ========== -->
+<section class="section reveal" id="links">
+  <div class="eyebrow">
+    <span class="eyebrow-label">Connect</span>
+    <div class="eyebrow-line"></div>
+  </div>
+
+  <nav class="links">
+    <a class="link-item" href="https://www.linkedin.com/in/shoaft/" target="_blank" rel="noopener">
+      <div class="link-icon">in</div>
+      <div class="link-label">
+        <span class="link-main">LinkedIn</span>
+        <span class="link-sub">Professional Profile</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a class="link-item" href="https://purdue0-my.sharepoint.com/:b:/g/personal/shoaft_purdue_edu/EYsWU1fCp8NGlQbku78QIuMB6aH5hxpMcKqRMlZvL5gA_w?e=EAYXQy" target="_blank" rel="noopener">
+      <div class="link-icon">CV</div>
+      <div class="link-label">
+        <span class="link-main">Curriculum Vitae</span>
+        <span class="link-sub">Full Academic & Research Record</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a class="link-item" href="https://orcid.org/0000-0001-9214-6039" target="_blank" rel="noopener">
+      <div class="link-icon">iD</div>
+      <div class="link-label">
+        <span class="link-main">ORCID</span>
+        <span class="link-sub">Research Identity · 0000-0001-9214-6039</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+  </nav>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer reveal">
+  <p class="footer-name">Trevor Shoaf</p>
+  <div class="footer-rule"></div>
+  <p class="footer-text">Purdue University · Biomedical Engineering · West Lafayette, IN</p>
+  <p class="footer-email"><a href="mailto:shoaft@purdue.edu">shoaft@purdue.edu</a></p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

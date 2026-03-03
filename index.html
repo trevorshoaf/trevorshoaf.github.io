@@ -697,9 +697,24 @@
   <p class="footer-name">Trevor Shoaf</p>
   <div class="footer-rule"></div>
   <p class="footer-text">Purdue University · Biomedical Engineering · West Lafayette, IN</p>
-  <p class="footer-email"><a href="/cdn-cgi/l/email-protection#d2a1babdb3b4a692a2a7a0b6a7b7fcb7b6a7"><span class="__cf_email__" data-cfemail="9ae9f2f5fbfceedaeaefe8feefffb4fffeef">[email&#160;protected]</span></a></p>
+  <p class="footer-email"><a href="mailto:shoaft@purdue.edu">shoaft@purdue.edu</a></p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e =
+<script>
+  try {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  } catch(e) {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }
+  setTimeout(() => {
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
+  }, 1000);
+</script>
+
+</body>
+</html>
